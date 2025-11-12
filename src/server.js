@@ -15,6 +15,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // TBA API key and team/event info
 const API_KEY = 'oZ5EqIhTaevR7upIovHNPtnBgOBNpCg7wemoew06R147bFQfYg4CJ6bq352lpvkW';
 const teamKey = 'frc4141';
+const teamNumber = teamKey.replace('frc', ''); // Only show 4141
 const eventKey = '2025cabl';
 
 // Route to fetch match data and return JSON
@@ -31,6 +32,13 @@ app.get('/matches', async (req, res) => {
       const bComp = compOrder[b.comp_level] ?? 99;
       if (aComp !== bComp) return aComp - bComp;
       return a.match_number - b.match_number;
+    });
+
+    // Replace "frc4141" with just number in alliances
+    data.forEach(match => {
+      ['blue', 'red'].forEach(color => {
+        match.alliances[color].team_keys = match.alliances[color].team_keys.map(t => t.replace('frc', ''));
+      });
     });
 
     res.json(data);
