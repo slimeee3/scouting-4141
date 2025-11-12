@@ -2,7 +2,7 @@ import express from 'express';
 import fetch from 'node-fetch';
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000; // Use Render's port if available
 
 // TBA API key and team/event info
 const API_KEY = 'oZ5EqIhTaevR7upIovHNPtnBgOBNpCg7wemoew06R147bFQfYg4CJ6bq352lpvkW';
@@ -18,7 +18,7 @@ app.get('/', async (req, res) => {
 
     let data = await response.json();
 
-    // Sort matches: first by comp_level (qualification -> playoff), then match_number
+    // Sort matches: qualification -> playoffs
     const compOrder = { 'qm': 0, 'qf': 1, 'sf': 2, 'f': 3 };
     data.sort((a, b) => {
       const aComp = compOrder[a.comp_level] ?? 99;
@@ -58,5 +58,5 @@ app.get('/', async (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
