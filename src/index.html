@@ -1,14 +1,25 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <title>Team 4141 Matches</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Matches for Team 4141</h1>
-  <ul id="matches"></ul>
+  <header>
+    <h1>Matches for Team 4141</h1>
+  </header>
+
+  <main id="matches-container">
+    <!-- Matches will be dynamically inserted here -->
+  </main>
+
+  <footer>
+    &copy; 2025 Team 4141 Scouting
+  </footer>
 
   <script>
-    const API_KEY = 'YOUR_TBA_KEY';
+    const API_KEY = 'oZ5EqIhTaevR7upIovHNPtnBgOBNpCg7wemoew06R147bFQfYg4CJ6bq352lpvkW';
     const teamKey = 'frc4141';
     const eventKey = '2025cabl';
     const url = `https://www.thebluealliance.com/api/v3/team/${teamKey}/event/${eventKey}/matches`;
@@ -24,14 +35,29 @@
           return a.match_number - b.match_number;
         });
 
-        const ul = document.getElementById('matches');
+        const container = document.getElementById('matches-container');
+
         data.forEach(match => {
-          const alliance = match.alliances.blue.team_keys.includes(teamKey) ? 'Blue' : 'Red';
-          const li = document.createElement('li');
-          li.textContent = `Match ${match.match_number} (${match.comp_level}) - ${alliance} alliance`;
-          ul.appendChild(li);
+          const isBlue = match.alliances.blue.team_keys.includes(teamKey);
+
+          const myAlliance = isBlue ? match.alliances.blue.team_keys : match.alliances.red.team_keys;
+          const enemyAlliance = isBlue ? match.alliances.red.team_keys : match.alliances.blue.team_keys;
+
+          const myScore = isBlue ? match.alliances.blue.score : match.alliances.red.score;
+          const enemyScore = isBlue ? match.alliances.red.score : match.alliances.blue.score;
+
+          const section = document.createElement('section');
+
+          section.innerHTML = `
+            <h3>Match ${match.match_number} (${match.comp_level.toUpperCase()})</h3>
+            <p><strong>My Alliance:</strong> <span class="my-alliance">${myAlliance.join(', ')}</span> - Points: ${myScore}</p>
+            <p><strong>Enemy Alliance:</strong> <span class="enemy-alliance">${enemyAlliance.join(', ')}</span> - Points: ${enemyScore}</p>
+          `;
+
+          container.appendChild(section);
         });
-      });
+      })
+      .catch(err => console.error('Error fetching matches:', err));
   </script>
 </body>
 </html>
