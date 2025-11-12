@@ -1,21 +1,27 @@
 import express from 'express';
 import fetch from 'node-fetch';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 3000; // Use Render's port if available
+
+// Serve static files from "public" folder
+app.use(express.static(path.join(__dirname, 'public')));
 
 // TBA API key and team/event info
 const API_KEY = 'oZ5EqIhTaevR7upIovHNPtnBgOBNpCg7wemoew06R147bFQfYg4CJ6bq352lpvkW';
 const teamKey = 'frc4141';
 const eventKey = '2025cabl';
 
-app.get('/', async (req, res) => {
+// Route to fetch match data and return JSON
+app.get('/matches', async (req, res) => {
   try {
     const url = `https://www.thebluealliance.com/api/v3/team/${teamKey}/event/${eventKey}/matches`;
-    const response = await fetch(url, {
-      headers: { 'X-TBA-Auth-Key': API_KEY }
-    });
-
+    const response = await fetch(url, { headers: { 'X-TBA-Auth-Key': API_KEY } });
     let data = await response.json();
 
     // Sort matches: qualification -> playoffs
@@ -27,34 +33,17 @@ app.get('/', async (req, res) => {
       return a.match_number - b.match_number;
     });
 
-    // Build HTML
-    let html = `
-      <html>
-      <head>
-        <title>Team 4141 Matches</title>
-      </head>
-      <body>
-        <h1>Matches for Team 4141 at ${eventKey}</h1>
-        <ul>
-    `;
-
-    data.forEach(match => {
-      const alliance = match.alliances.blue.team_keys.includes(teamKey) ? 'Blue' : 'Red';
-      html += `<li>Match ${match.match_number} (${match.comp_level.toUpperCase()}) - ${alliance} alliance</li>`;
-    });
-
-    html += `
-        </ul>
-      </body>
-      </html>
-    `;
-
-    res.send(html);
+    res.json(data);
 
   } catch (error) {
     console.error(error);
-    res.status(500).send('Error fetching matches');
+    res.status(500).send({ error: 'Error fetching matches' });
   }
+});
+
+// Route to serve main HTML page
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 app.listen(PORT, () => {
