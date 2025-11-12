@@ -40,8 +40,11 @@
         data.forEach(match => {
           const isBlue = match.alliances.blue.team_keys.includes(teamKey);
 
-          const myAlliance = isBlue ? match.alliances.blue.team_keys : match.alliances.red.team_keys;
-          const enemyAlliance = isBlue ? match.alliances.red.team_keys : match.alliances.blue.team_keys;
+          // Remove 'frc' prefix from team numbers
+          const myAlliance = (isBlue ? match.alliances.blue.team_keys : match.alliances.red.team_keys)
+                              .map(t => t.replace('frc',''));
+          const enemyAlliance = (isBlue ? match.alliances.red.team_keys : match.alliances.blue.team_keys)
+                                .map(t => t.replace('frc',''));
 
           const myScore = isBlue ? match.alliances.blue.score : match.alliances.red.score;
           const enemyScore = isBlue ? match.alliances.red.score : match.alliances.blue.score;
@@ -50,8 +53,8 @@
 
           section.innerHTML = `
             <h3>Match ${match.match_number} (${match.comp_level.toUpperCase()})</h3>
-            <p><strong>My Alliance:</strong> <span class="my-alliance">${myAlliance.join(', ')}</span> - Points: ${myScore}</p>
-            <p><strong>Enemy Alliance:</strong> <span class="enemy-alliance">${enemyAlliance.join(', ')}</span> - Points: ${enemyScore}</p>
+            <p><strong>My Alliance:</strong> <span class="my-alliance">${myAlliance.join(', ')}</span> - Points: ${myScore ?? 'N/A'}</p>
+            <p><strong>Enemy Alliance:</strong> <span class="enemy-alliance">${enemyAlliance.join(', ')}</span> - Points: ${enemyScore ?? 'N/A'}</p>
           `;
 
           container.appendChild(section);
