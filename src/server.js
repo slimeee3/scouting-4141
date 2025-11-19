@@ -9,9 +9,6 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Serve static files from "public" folder
-app.use(express.static(path.join(__dirname, 'public')));
-
 // TBA API key and team/event info
 const API_KEY = 'oZ5EqIhTaevR7upIovHNPtnBgOBNpCg7wemoew06R147bFQfYg4CJ6bq352lpvkW';
 const teamKey = 'frc4141';
@@ -49,11 +46,16 @@ app.get('/matches', async (req, res) => {
 
 // Routes to serve HTML pages
 app.get('/game', (req, res) => {
-  res.sendFile(path.join(__dirname, 'src', 'games', 'games.html'));
+  res.sendFile(path.join(__dirname, 'src', 'games', 'game.html'));
 });
 
 app.get('/prediction', (req, res) => {
   res.sendFile(path.join(__dirname, 'src', 'prediction', 'prediction.html'));
+});
+
+// Optional: Redirect root to game page
+app.get('/', (req, res) => {
+  res.redirect('/game');
 });
 
 app.listen(PORT, () => {
