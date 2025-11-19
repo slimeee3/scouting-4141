@@ -7,7 +7,16 @@
 </head>
 <body>
   <header>
-    <h1>Matches for Team 4141</h1>
+    <h1>Team 4141 Scouting</h1>
+
+    <!-- Navigation bar -->
+    <nav class="navbar">
+      <ul>
+        <li><a href="game.html">Games</a></li>
+        <li><a href="prediction/prediction.html">Prediction</a></li>
+        <li><a href="analysis/analysis.html">Analysis</a></li>
+      </ul>
+    </nav>
   </header>
 
   <main id="matches-container">
@@ -40,7 +49,6 @@
         data.forEach(match => {
           const isBlue = match.alliances.blue.team_keys.includes(teamKey);
 
-          // Remove 'frc' prefix from team numbers
           const myAlliance = (isBlue ? match.alliances.blue.team_keys : match.alliances.red.team_keys)
                               .map(t => t.replace('frc',''));
           const enemyAlliance = (isBlue ? match.alliances.red.team_keys : match.alliances.blue.team_keys)
