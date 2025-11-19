@@ -20,7 +20,6 @@ header {
 .navbar {
   display: flex;
   justify-content: center;
-  gap: 0; /* no gap, use flex spacing inside cards */
   width: 100%;
   background-color: #777; /* grey navbar */
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -28,14 +27,14 @@ header {
 
 /* Nav links as cards */
 .nav-card {
-  flex: 1; /* fill equally */
+  flex: 1;
   text-align: center;
   padding: 1em 0;
   background-color: #fff;
   color: #a80000;
   font-weight: bold;
   text-decoration: none;
-  border-right: 1px solid #ccc; /* optional separator */
+  border-right: 1px solid #ccc;
   transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
 }
 
@@ -63,6 +62,7 @@ header {
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
   padding: 1em;
+  cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -76,6 +76,7 @@ header {
   color: #a80000;
 }
 
+/* Alliance highlights */
 .my-alliance {
   display: inline-block;
   background-color: #ffcccc;  /* light red highlight */
@@ -95,7 +96,6 @@ header {
   border-radius: 6px;
 }
 
-
 /* Footer */
 footer {
   text-align: center;
@@ -103,4 +103,42 @@ footer {
   background-color: #a80000;
   color: #fff;
   margin-top: 2em;
+}
+
+/* Modal background */
+#match-modal {
+  display: none; /* hidden by default */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+
+/* Modal content */
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  max-width: 700px;
+  width: 90%;
+  border-radius: 10px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.25);
+  overflow-y: auto;
+  max-height: 90%;
+  position: relative;
+}
+
+/* Close button */
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 1.5em;
+  font-weight: bold;
+  cursor: pointer;
 }
