@@ -1,31 +1,46 @@
 /* Navigation bar */
 .navbar {
-  background-color: #003366;
-  padding: 0.5em 0;
+  background-color: #003366; /* dark blue */
+  padding: 0.5em 1em;
   margin-top: 0.5em;
   border-radius: 6px;
 }
 
+/* Remove default list styling and center items */
 .navbar ul {
   list-style: none;
   display: flex;
   justify-content: center;
+  align-items: center;
+  gap: 2em; /* space between items */
   margin: 0;
   padding: 0;
 }
 
+/* Each list item */
 .navbar li {
-  margin: 0 1.5em;
+  margin: 0;
 }
 
+/* Links */
 .navbar a {
   text-decoration: none;
   color: white;
   font-weight: bold;
   font-size: 1em;
-  transition: color 0.2s ease;
+  transition: color 0.3s ease, transform 0.2s ease;
 }
 
+/* Hover effect */
 .navbar a:hover {
-  color: #00aaff;
+  color: #00aaff; /* bright blue */
+  transform: scale(1.05); /* slight grow on hover */
+}
+
+/* Responsive: stack links on small screens */
+@media (max-width: 600px) {
+  .navbar ul {
+    flex-direction: column;
+    gap: 1em;
+  }
 }
