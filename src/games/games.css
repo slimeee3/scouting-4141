@@ -37,7 +37,32 @@
   transform: scale(1.05); /* slight grow on hover */
 }
 
-/* Responsive: stack links on small screens */
+/* Match sections */
+#matches-container section {
+  border: 1px solid #003366;
+  border-radius: 6px;
+  padding: 0.5em 1em;
+  margin: 0.5em auto;
+  max-width: 600px;
+  background-color: #f2f2f2;
+}
+
+#matches-container h3 {
+  margin: 0.2em 0;
+  color: #003366;
+}
+
+.my-alliance {
+  color: #0066cc;
+  font-weight: bold;
+}
+
+.enemy-alliance {
+  color: #cc0000;
+  font-weight: bold;
+}
+
+/* Responsive */
 @media (max-width: 600px) {
   .navbar ul {
     flex-direction: column;

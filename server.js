@@ -1,42 +1,25 @@
 import express from 'express';
+import fetch from 'node-fetch';
 import path from 'path';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Serve everything in src as static files
-app.use(express.static(path.join(process.cwd(), 'src')));
+// Serve static files from src
+app.use(express.static('src'));
 
-// Route for games page
-app.get('/games', (req, res) => {
-  const filePath = path.join(process.cwd(), 'src', 'games', 'games.html');
-  console.log('Serving games page from:', filePath);
-  res.sendFile(filePath, err => {
-    if (err) {
-      console.error('Error sending games.html:', err);
-      res.status(404).send('games.html not found');
-    }
-  });
+// Routes for HTML pages
+app.get('/game', (req, res) => {
+  res.sendFile(path.join(process.cwd(), 'src', 'games', 'games.html'));
 });
 
-// Route for prediction page
 app.get('/prediction', (req, res) => {
-  const filePath = path.join(process.cwd(), 'src', 'prediction', 'prediction.html');
-  console.log('Serving prediction page from:', filePath);
-  res.sendFile(filePath, err => {
-    if (err) {
-      console.error('Error sending prediction.html:', err);
-      res.status(404).send('prediction.html not found');
-    }
-  });
+  res.sendFile(path.join(process.cwd(), 'src', 'prediction', 'prediction.html'));
 });
 
-// Redirect root to /games
-app.get('/', (req, res) => {
-  res.redirect('/games');
-});
+// Redirect root
+app.get('/', (req, res) => res.redirect('/game'));
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
-  console.log('Current working directory:', process.cwd());
 });
