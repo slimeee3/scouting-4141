@@ -14,7 +14,7 @@ const API_KEY = 'oZ5EqIhTaevR7upIovHNPtnBgOBNpCg7wemoew06R147bFQfYg4CJ6bq352lpvk
 const teamKey = 'frc4141';
 const eventKey = '2025cabl';
 
-// Route to fetch match data and return JSON
+// Route to fetch match data
 app.get('/matches', async (req, res) => {
   try {
     const url = `https://www.thebluealliance.com/api/v3/team/${teamKey}/event/${eventKey}/matches`;
@@ -36,22 +36,22 @@ app.get('/matches', async (req, res) => {
     });
 
     res.json(data);
-  } catch (error) {
-    console.error(error);
+  } catch (err) {
+    console.error(err);
     res.status(500).send({ error: 'Error fetching matches' });
   }
 });
 
-// Serve HTML pages
+// Routes for HTML pages
 app.get('/game', (req, res) => {
-  res.sendFile(path.join(__dirname, 'games', 'game.html'));
+  res.sendFile(path.join(__dirname, 'src', 'games', 'game.html'));
 });
 
 app.get('/prediction', (req, res) => {
-  res.sendFile(path.join(__dirname, 'prediction', 'prediction.html'));
+  res.sendFile(path.join(__dirname, 'src', 'prediction', 'prediction.html'));
 });
 
-// Redirect root to game page
+// Redirect root to game
 app.get('/', (req, res) => {
   res.redirect('/game');
 });
