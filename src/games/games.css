@@ -1,54 +1,106 @@
-/* Navigation bar */
-.navbar {
-  background-color: #003366;
-  padding: 0.5em 1em;
-  border-radius: 6px;
-}
-
-/* List styling */
-.navbar ul {
-  list-style: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 2em;
+/* Remove default margin/padding and make body full width */
+html, body {
   margin: 0;
   padding: 0;
+  width: 100%;
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+  color: #333;
 }
 
-/* Links */
-.navbar a {
-  text-decoration: none;
-  color: white;
+/* Header */
+header {
+  text-align: center;
+  padding: 1em 0;
+  background-color: #a80000; /* dark red */
+  color: #fff;
+}
+
+/* Full-width Navbar */
+.navbar {
+  display: flex;
+  justify-content: center;
+  gap: 0; /* no gap, use flex spacing inside cards */
+  width: 100%;
+  background-color: #777; /* grey navbar */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Nav links as cards */
+.nav-card {
+  flex: 1; /* fill equally */
+  text-align: center;
+  padding: 1em 0;
+  background-color: #fff;
+  color: #a80000;
   font-weight: bold;
-  font-size: 1em;
-  transition: color 0.3s ease, transform 0.2s ease;
+  text-decoration: none;
+  border-right: 1px solid #ccc; /* optional separator */
+  transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
 }
 
-.navbar a:hover {
-  color: #00aaff;
-  transform: scale(1.05);
+.nav-card:last-child {
+  border-right: none;
 }
 
-/* Responsive for mobile */
-@media (max-width: 600px) {
-  .navbar ul {
-    flex-direction: column;
-    gap: 1em;
-  }
+.nav-card:hover {
+  transform: translateY(-5px);
+  background-color: #eee;
+  color: #ff3333;
 }
 
-/* Matches container */
+/* Matches container grid */
 #matches-container {
-  max-width: 800px;
-  margin: 1em auto;
-  padding: 0 1em;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1em;
+  padding: 1em 2em;
 }
 
+/* Match Card */
 #matches-container section {
-  border: 1px solid #003366;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  padding: 1em;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#matches-container section:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 12px rgba(0,0,0,0.2);
+}
+
+#matches-container h3 {
+  margin-top: 0;
+  color: #a80000;
+}
+
+.my-alliance {
+  display: inline-block;
+  background-color: #ffcccc;  /* light red highlight */
+  color: #a80000;             /* strong dark red text */
+  font-weight: 900;
+  padding: 4px 8px;
   border-radius: 6px;
-  padding: 0.5em 1em;
-  margin-bottom: 1em;
-  background-color: #f0f8ff;
+  font-size: 1.1em;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+}
+
+.enemy-alliance {
+  display: inline-block;
+  background-color: #e6e6e6;  /* soft grey */
+  color: #555;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 1em;
+  background-color: #a80000;
+  color: #fff;
+  margin-top: 2em;
 }
