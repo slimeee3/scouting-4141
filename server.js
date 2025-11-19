@@ -1,27 +1,26 @@
 import express from 'express';
 import fetch from 'node-fetch';
 import path from 'path';
-import { fileURLToPath } from 'url';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// TBA API key and team/event info
-const API_KEY = 'oZ5EqIhTaevR7upIovHNPtnBgOBNpCg7wemoew06R147bFQfYg4CJ6bq352lpvkW';
+// TBA API info
+const API_KEY = 'YOUR_API_KEY';
 const teamKey = 'frc4141';
 const eventKey = '2025cabl';
 
-// Route to fetch match data
+// Serve static files (optional)
+app.use(express.static('src'));
+
+// Match API
 app.get('/matches', async (req, res) => {
   try {
     const url = `https://www.thebluealliance.com/api/v3/team/${teamKey}/event/${eventKey}/matches`;
     const response = await fetch(url, { headers: { 'X-TBA-Auth-Key': API_KEY } });
     let data = await response.json();
 
-    const compOrder = { 'qm': 0, 'qf': 1, 'sf': 2, 'f': 3 };
+    const compOrder = { qm: 0, qf: 1, sf: 2, f: 3 };
     data.sort((a, b) => {
       const aComp = compOrder[a.comp_level] ?? 99;
       const bComp = compOrder[b.comp_level] ?? 99;
@@ -42,16 +41,16 @@ app.get('/matches', async (req, res) => {
   }
 });
 
-// Routes for HTML pages
+// Serve HTML pages relative to project root
 app.get('/game', (req, res) => {
-  res.sendFile(path.join(__dirname, 'src', 'games', 'game.html'));
+  res.sendFile(path.join(process.cwd(), 'src', 'games', 'game.html'));
 });
 
 app.get('/prediction', (req, res) => {
-  res.sendFile(path.join(__dirname, 'src', 'prediction', 'prediction.html'));
+  res.sendFile(path.join(process.cwd(), 'src', 'prediction', 'prediction.html'));
 });
 
-// Redirect root to game
+// Redirect root
 app.get('/', (req, res) => {
   res.redirect('/game');
 });
