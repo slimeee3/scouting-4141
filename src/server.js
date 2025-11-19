@@ -7,7 +7,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-const PORT = process.env.PORT || 3000; // Use Render's port if available
+const PORT = process.env.PORT || 3000;
 
 // Serve static files from "public" folder
 app.use(express.static(path.join(__dirname, 'public')));
@@ -15,7 +15,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 // TBA API key and team/event info
 const API_KEY = 'oZ5EqIhTaevR7upIovHNPtnBgOBNpCg7wemoew06R147bFQfYg4CJ6bq352lpvkW';
 const teamKey = 'frc4141';
-const teamNumber = teamKey.replace('frc', ''); // Only show 4141
 const eventKey = '2025cabl';
 
 // Route to fetch match data and return JSON
@@ -34,24 +33,27 @@ app.get('/matches', async (req, res) => {
       return a.match_number - b.match_number;
     });
 
-    // Replace "frc4141" with just number in alliances
+    // Remove 'frc' prefix for all team numbers
     data.forEach(match => {
       ['blue', 'red'].forEach(color => {
-        match.alliances[color].team_keys = match.alliances[color].team_keys.map(t => t.replace('frc', ''));
+        match.alliances[color].team_keys = match.alliances[color].team_keys.map(t => t.replace('frc',''));
       });
     });
 
     res.json(data);
-
   } catch (error) {
     console.error(error);
     res.status(500).send({ error: 'Error fetching matches' });
   }
 });
 
-// Route to serve main HTML page
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+// Routes to serve HTML pages
+app.get('/game', (req, res) => {
+  res.sendFile(path.join(__dirname, 'src', 'games', 'games.html'));
+});
+
+app.get('/prediction', (req, res) => {
+  res.sendFile(path.join(__dirname, 'src', 'prediction', 'prediction.html'));
 });
 
 app.listen(PORT, () => {
