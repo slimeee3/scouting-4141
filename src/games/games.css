@@ -1,28 +1,25 @@
 /* Navigation bar */
 .navbar {
-  background-color: #003366; /* dark blue */
+  background-color: #003366;
   padding: 0.5em 1em;
   margin-top: 0.5em;
   border-radius: 6px;
 }
 
-/* Remove default list styling and center items */
 .navbar ul {
   list-style: none;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 2em; /* space between items */
+  gap: 2em;
   margin: 0;
   padding: 0;
 }
 
-/* Each list item */
 .navbar li {
   margin: 0;
 }
 
-/* Links */
 .navbar a {
   text-decoration: none;
   color: white;
@@ -31,38 +28,11 @@
   transition: color 0.3s ease, transform 0.2s ease;
 }
 
-/* Hover effect */
 .navbar a:hover {
-  color: #00aaff; /* bright blue */
-  transform: scale(1.05); /* slight grow on hover */
+  color: #00aaff;
+  transform: scale(1.05);
 }
 
-/* Match sections */
-#matches-container section {
-  border: 1px solid #003366;
-  border-radius: 6px;
-  padding: 0.5em 1em;
-  margin: 0.5em auto;
-  max-width: 600px;
-  background-color: #f2f2f2;
-}
-
-#matches-container h3 {
-  margin: 0.2em 0;
-  color: #003366;
-}
-
-.my-alliance {
-  color: #0066cc;
-  font-weight: bold;
-}
-
-.enemy-alliance {
-  color: #cc0000;
-  font-weight: bold;
-}
-
-/* Responsive */
 @media (max-width: 600px) {
   .navbar ul {
     flex-direction: column;
