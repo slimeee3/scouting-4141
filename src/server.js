@@ -21,7 +21,6 @@ app.get('/matches', async (req, res) => {
     const response = await fetch(url, { headers: { 'X-TBA-Auth-Key': API_KEY } });
     let data = await response.json();
 
-    // Sort matches: qualification -> playoffs
     const compOrder = { 'qm': 0, 'qf': 1, 'sf': 2, 'f': 3 };
     data.sort((a, b) => {
       const aComp = compOrder[a.comp_level] ?? 99;
@@ -30,7 +29,6 @@ app.get('/matches', async (req, res) => {
       return a.match_number - b.match_number;
     });
 
-    // Remove 'frc' prefix for all team numbers
     data.forEach(match => {
       ['blue', 'red'].forEach(color => {
         match.alliances[color].team_keys = match.alliances[color].team_keys.map(t => t.replace('frc',''));
@@ -44,7 +42,7 @@ app.get('/matches', async (req, res) => {
   }
 });
 
-// Routes to serve HTML pages
+// Serve HTML pages
 app.get('/game', (req, res) => {
   res.sendFile(path.join(__dirname, 'games', 'game.html'));
 });
