@@ -1,0 +1,12 @@
+#prediction-container section {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    padding: 1em;
+    margin: 1em 2em;
+  }
+  #prediction-container h3 {
+    color: #a80000;
+    margin-top: 0;
+  }
+  
