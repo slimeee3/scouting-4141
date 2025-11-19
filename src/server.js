@@ -46,14 +46,14 @@ app.get('/matches', async (req, res) => {
 
 // Routes to serve HTML pages
 app.get('/game', (req, res) => {
-  res.sendFile(path.join(__dirname, 'src', 'games', 'game.html'));
+  res.sendFile(path.join(__dirname, 'games', 'game.html'));
 });
 
 app.get('/prediction', (req, res) => {
-  res.sendFile(path.join(__dirname, 'src', 'prediction', 'prediction.html'));
+  res.sendFile(path.join(__dirname, 'prediction', 'prediction.html'));
 });
 
-// Optional: Redirect root to game page
+// Redirect root to game page
 app.get('/', (req, res) => {
   res.redirect('/game');
 });
