@@ -1,14 +1,21 @@
-/* Remove default margin/padding and make body full width */
+/* --- RESET & FULL HEIGHT --- */
 html, body {
   margin: 0;
   padding: 0;
-  width: 100%;
+  height: 100%;
   font-family: Arial, sans-serif;
   background-color: #f5f5f5;
   color: #333;
 }
 
-/* Header */
+/* --- BODY FLEX LAYOUT --- */
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* ensures body takes full screen height */
+}
+
+/* --- HEADER --- */
 header {
   text-align: center;
   padding: 1em 0;
@@ -16,16 +23,16 @@ header {
   color: #fff;
 }
 
-/* Full-width Navbar */
+/* --- NAVBAR --- */
 .navbar {
   display: flex;
   justify-content: center;
   width: 100%;
-  background-color: #777; /* grey navbar */
+  background-color: #777;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-/* Nav links as cards */
+/* Nav cards */
 .nav-card {
   flex: 1;
   text-align: center;
@@ -48,12 +55,13 @@ header {
   color: #ff3333;
 }
 
-/* Matches container grid */
+/* --- MATCHES CONTAINER --- */
 #matches-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 1em;
   padding: 1em 2em;
+  flex-grow: 1; /* takes all remaining vertical space to push footer down */
 }
 
 /* Match Card */
@@ -76,11 +84,11 @@ header {
   color: #a80000;
 }
 
-/* Alliance highlights */
+/* --- ALLIANCE HIGHLIGHTS --- */
 .my-alliance {
   display: inline-block;
-  background-color: #ffcccc;  /* light red highlight */
-  color: #a80000;             /* strong dark red text */
+  background-color: #ffcccc;
+  color: #a80000;
   font-weight: 900;
   padding: 4px 8px;
   border-radius: 6px;
@@ -90,24 +98,24 @@ header {
 
 .enemy-alliance {
   display: inline-block;
-  background-color: #e6e6e6;  /* soft grey */
+  background-color: #e6e6e6;
   color: #555;
   padding: 4px 8px;
   border-radius: 6px;
 }
 
-/* Footer */
+/* --- FOOTER --- */
 footer {
   text-align: center;
   padding: 1em;
   background-color: #a80000;
   color: #fff;
-  margin-top: 2em;
+  margin-top: auto; /* sticky bottom */
 }
 
-/* Modal background */
+/* --- MODAL --- */
 #match-modal {
-  display: none; /* hidden by default */
+  display: none;
   position: fixed;
   top: 0;
   left: 0;
@@ -119,8 +127,6 @@ footer {
   z-index: 1000;
 }
 
-
-/* Modal content */
 .modal-content {
   background-color: #fff;
   padding: 20px;
@@ -133,7 +139,6 @@ footer {
   position: relative;
 }
 
-/* Close button */
 .modal-close {
   position: absolute;
   top: 10px;
