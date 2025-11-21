@@ -20,15 +20,28 @@ window.addEventListener('click', e => {
 fetch(url, { headers: { 'X-TBA-Auth-Key': API_KEY } })
   .then(res => res.json())
   .then(data => {
-    console.log('First match full breakdown:', data[0].score_breakdown);
+    // Remove frc prefix
+    data.forEach(match => {
+      ['blue', 'red'].forEach(color => {
+        match.alliances[color].team_keys = match.alliances[color].team_keys.map(t => t.replace('frc', ''));
+      });
+    });
+
+    // --- SORT MATCHES ---
+    const compOrder = { qm: 0, qf: 1, sf: 2, f: 3 };
+    data.sort((a, b) => {
+      const aComp = compOrder[a.comp_level] ?? 99;
+      const bComp = compOrder[b.comp_level] ?? 99;
+      if (aComp !== bComp) return aComp - bComp;
+      return a.match_number - b.match_number;
+    });
+
     const container = document.getElementById('matches-container');
 
     data.forEach(match => {
       const isBlue = match.alliances.blue.team_keys.includes(teamKey);
-      const myAlliance = (isBlue ? match.alliances.blue.team_keys : match.alliances.red.team_keys)
-        .map(t => t.replace('frc', ''));
-      const enemyAlliance = (isBlue ? match.alliances.red.team_keys : match.alliances.blue.team_keys)
-        .map(t => t.replace('frc', ''));
+      const myAlliance = (isBlue ? match.alliances.blue.team_keys : match.alliances.red.team_keys);
+      const enemyAlliance = (isBlue ? match.alliances.red.team_keys : match.alliances.blue.team_keys);
       const myScore = isBlue ? match.alliances.blue.score : match.alliances.red.score;
       const enemyScore = isBlue ? match.alliances.red.score : match.alliances.blue.score;
 
@@ -39,10 +52,7 @@ fetch(url, { headers: { 'X-TBA-Auth-Key': API_KEY } })
         <p><strong>Opponent Alliance:</strong> <span class="enemy-alliance">${enemyAlliance.join(', ')}</span> — ${enemyScore ?? 0}</p>
       `;
 
-      section.addEventListener('click', () => {
-        showMatchModal(match);
-      });
-
+      section.addEventListener('click', () => showMatchModal(match));
       container.appendChild(section);
     });
   })
@@ -58,7 +68,6 @@ function showMatchModal(match) {
 
   let html = '';
 
-  // Generate alliances with full block highlight
   html += generateAllianceBlock(match.score_breakdown?.blue, match.alliances.blue.team_keys, mySideKey === 'blue', 'Blue Alliance');
   html += generateAllianceBlock(match.score_breakdown?.red, match.alliances.red.team_keys, mySideKey === 'red', 'Red Alliance');
 
@@ -71,9 +80,8 @@ function showMatchModal(match) {
   }
 
   modalBody.innerHTML = html;
-  modal.style.display = 'flex'; // show modal only when called
+  modal.style.display = 'flex';
 }
-
 
 // Helper function to generate full alliance block
 function generateAllianceBlock(side, teamKeys, isOurAlliance, title) {

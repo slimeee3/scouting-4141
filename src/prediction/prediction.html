@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Team 4141 Prediction</title>
-  <link rel="stylesheet" href="/games/games.css">
+  <title>Team 4141 Predictions</title>
+  <link rel="stylesheet" href="prediction.css">
 </head>
 <body>
   <header>
-    <h1>Team 4141 Prediction</h1>
+    <h1>Team 4141 Predictions</h1>
     <nav class="navbar">
       <a class="nav-card" href="/games">Games</a>
       <a class="nav-card" href="/prediction">Prediction</a>
@@ -15,21 +15,21 @@
     </nav>
   </header>
 
-  <main id="prediction-container">
-    <section>
-      <h3>Upcoming Match Prediction</h3>
-      <p>Team 4141 will score X points</p>
-      <p>Predicted outcome: Win / Loss / Tie</p>
-    </section>
+  <main>
+    <div id="match-selector-container">
+      <h2>Select a Match:</h2>
+      <div id="match-selector"></div>
+    </div>
 
-    <section>
-      <h3>Another Prediction Block</h3>
-      <p>Details here...</p>
-    </section>
+    <div id="prediction-panel">
+      <p>Select a match to see predicted scores.</p>
+    </div>
   </main>
 
   <footer>
     &copy; 2025 Team 4141 Scouting
   </footer>
+
+  <script src="prediction.js"></script>
 </body>
 </html>
